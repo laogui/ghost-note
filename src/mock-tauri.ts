@@ -532,6 +532,11 @@ export function isTauri(): boolean {
   return typeof window !== 'undefined' && '__TAURI__' in window
 }
 
+/** Register content for a new entry in mock mode (for get_note_content calls) */
+export function addMockEntry(_entry: VaultEntry, content: string) {
+  MOCK_CONTENT[_entry.path] = content
+}
+
 export async function mockInvoke<T>(cmd: string, args?: any): Promise<T> {
   const handler = mockHandlers[cmd]
   if (handler) {

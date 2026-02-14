@@ -5,7 +5,8 @@ import { NoteList } from './components/NoteList'
 import { Editor } from './components/Editor'
 import { Inspector } from './components/Inspector'
 import { ResizeHandle } from './components/ResizeHandle'
-import { isTauri, mockInvoke } from './mock-tauri'
+import { CreateNoteDialog, type NoteType } from './components/CreateNoteDialog'
+import { isTauri, mockInvoke, addMockEntry } from './mock-tauri'
 import type { VaultEntry, SidebarSelection, GitCommit } from './types'
 import './App.css'
 
@@ -25,6 +26,7 @@ function App() {
   const [inspectorCollapsed, setInspectorCollapsed] = useState(false)
   const [allContent, setAllContent] = useState<Record<string, string>>({})
   const [gitHistory, setGitHistory] = useState<GitCommit[]>([])
+  const [showCreateDialog, setShowCreateDialog] = useState(false)
 
   useEffect(() => {
     const loadVault = async () => {
@@ -152,6 +154,60 @@ function App() {
     }
   }, [entries, handleSelectNote])
 
+  const handleCreateNote = useCallback(async (title: string, type: NoteType) => {
+    // Build file path: type determines folder
+    const typeToFolder: Record<string, string> = {
+      Note: 'note',
+      Project: 'project',
+      Experiment: 'experiment',
+      Responsibility: 'responsibility',
+      Procedure: 'procedure',
+      Person: 'person',
+      Event: 'event',
+      Topic: 'topic',
+    }
+    const folder = typeToFolder[type] || 'note'
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    const path = `/Users/luca/Laputa/${folder}/${slug}.md`
+    const now = Math.floor(Date.now() / 1000)
+
+    const newEntry: VaultEntry = {
+      path,
+      filename: `${slug}.md`,
+      title,
+      isA: type,
+      aliases: [],
+      belongsTo: [],
+      relatedTo: [],
+      status: type === 'Topic' || type === 'Person' ? null : 'Active',
+      owner: null,
+      cadence: null,
+      modifiedAt: now,
+      fileSize: 0,
+    }
+
+    const frontmatter = [
+      '---',
+      `title: ${title}`,
+      `is_a: ${type}`,
+      ...(newEntry.status ? [`status: ${newEntry.status}`] : []),
+      '---',
+    ].join('\n')
+    const content = `${frontmatter}\n\n# ${title}\n\n`
+
+    if (isTauri()) {
+      // TODO: Add Tauri command for creating notes
+    } else {
+      addMockEntry(newEntry, content)
+    }
+
+    setEntries((prev) => [newEntry, ...prev])
+    setAllContent((prev) => ({ ...prev, [path]: content }))
+
+    // Open the new note
+    handleSelectNote(newEntry)
+  }, [handleSelectNote])
+
   const handleSidebarResize = useCallback((delta: number) => {
     setSidebarWidth((w) => Math.max(150, Math.min(400, w + delta)))
   }, [])
@@ -174,7 +230,7 @@ function App() {
       </div>
       <ResizeHandle onResize={handleSidebarResize} />
       <div className="app__note-list" style={{ width: noteListWidth }}>
-        <NoteList entries={entries} selection={selection} selectedNote={activeTab?.entry ?? null} onSelectNote={handleSelectNote} />
+        <NoteList entries={entries} selection={selection} selectedNote={activeTab?.entry ?? null} onSelectNote={handleSelectNote} onCreateNote={() => setShowCreateDialog(true)} />
       </div>
       <ResizeHandle onResize={handleNoteListResize} />
       <div className="app__editor">
@@ -202,6 +258,11 @@ function App() {
           onNavigate={handleNavigateWikilink}
         />
       </div>
+      <CreateNoteDialog
+        open={showCreateDialog}
+        onClose={() => setShowCreateDialog(false)}
+        onCreate={handleCreateNote}
+      />
     </div>
   )
 }

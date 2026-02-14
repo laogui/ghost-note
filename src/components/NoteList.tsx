@@ -7,6 +7,7 @@ interface NoteListProps {
   selection: SidebarSelection
   selectedNote: VaultEntry | null
   onSelectNote: (entry: VaultEntry) => void
+  onCreateNote: () => void
 }
 
 /** Check if a wikilink array (e.g. belongsTo) references a given entry by path stem */
@@ -68,7 +69,7 @@ const TYPE_PILLS = [
   { label: 'Responsibilities', type: 'Responsibility' },
 ] as const
 
-export function NoteList({ entries, selection, selectedNote, onSelectNote }: NoteListProps) {
+export function NoteList({ entries, selection, selectedNote, onSelectNote, onCreateNote }: NoteListProps) {
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<string | null>(null)
 
@@ -98,7 +99,12 @@ export function NoteList({ entries, selection, selectedNote, onSelectNote }: Not
     <div className="note-list">
       <div className="note-list__header">
         <h3>Notes</h3>
-        <span className="note-list__count">{displayed.length}</span>
+        <div className="note-list__header-right">
+          <span className="note-list__count">{displayed.length}</span>
+          <button className="note-list__add-btn" onClick={onCreateNote} title="Create new note">
+            +
+          </button>
+        </div>
       </div>
       <div className="note-list__search">
         <input

@@ -1,0 +1,131 @@
+.create-dialog__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.create-dialog {
+  background: #1e1e3a;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.create-dialog__title {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.create-dialog__field {
+  margin-bottom: 16px;
+}
+
+.create-dialog__label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.create-dialog__input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #16162a;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.create-dialog__input:focus {
+  border-color: #4a9eff;
+}
+
+.create-dialog__input::placeholder {
+  color: #555;
+}
+
+.create-dialog__types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.create-dialog__type-btn {
+  padding: 4px 12px;
+  font-size: 12px;
+  border: 1px solid #2a2a4a;
+  border-radius: 14px;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.create-dialog__type-btn:hover {
+  background: #2a2a4a;
+  color: #e0e0e0;
+}
+
+.create-dialog__type-btn--active {
+  background: #4a9eff;
+  color: #fff;
+  border-color: #4a9eff;
+}
+
+.create-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.create-dialog__btn {
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.create-dialog__btn--cancel {
+  background: transparent;
+  color: #888;
+  border: 1px solid #2a2a4a;
+}
+
+.create-dialog__btn--cancel:hover {
+  background: #2a2a4a;
+  color: #e0e0e0;
+}
+
+.create-dialog__btn--create {
+  background: #4a9eff;
+  color: #fff;
+}
+
+.create-dialog__btn--create:hover {
+  background: #3a8eef;
+}
+
+.create-dialog__btn--create:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
