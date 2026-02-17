@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
+import { useEffect, useState, useCallback, useMemo, useRef, memo } from 'react'
 import { BlockNoteSchema, defaultInlineContentSpecs } from '@blocknote/core'
 import { filterSuggestionItems } from '@blocknote/core/extensions'
 import { createReactInlineContentSpec, useCreateBlockNote, SuggestionMenuController } from '@blocknote/react'
@@ -120,23 +120,31 @@ function BlockNoteTab({ content, entries, onNavigateWikilink }: { content: strin
     return () => container.removeEventListener('click', handler as EventListener, true)
   }, [editor])
 
-  const getWikilinkItems = useCallback(async (query: string) => {
-    const items = entries.map(entry => ({
+  const baseItems = useMemo(
+    () => entries.map(entry => ({
       title: entry.title,
+      aliases: [entry.filename.replace(/\.md$/, ''), ...entry.aliases],
+      group: entry.isA || 'Note',
+      entryTitle: entry.title,
+    })),
+    [entries]
+  )
+
+  const getWikilinkItems = useCallback(async (query: string) => {
+    const items = baseItems.map(item => ({
+      ...item,
       onItemClick: () => {
         editor.insertInlineContent([
           {
             type: 'wikilink' as const,
-            props: { target: entry.title },
+            props: { target: item.entryTitle },
           },
           " ",
         ])
       },
-      aliases: [entry.filename.replace(/\.md$/, ''), ...entry.aliases],
-      group: entry.isA || 'Note',
     }))
     return filterSuggestionItems(items, query)
-  }, [entries, editor])
+  }, [baseItems, editor])
 
   return (
     <div className="editor__blocknote-container" style={cssVars as React.CSSProperties}>
@@ -153,7 +161,7 @@ function BlockNoteTab({ content, entries, onNavigateWikilink }: { content: strin
   )
 }
 
-export function Editor({
+export const Editor = memo(function Editor({
   tabs, activeTabPath, entries, onSwitchTab, onCloseTab, onNavigateWikilink, onLoadDiff, isModified, onCreateNote,
   inspectorCollapsed, onToggleInspector, inspectorWidth, onInspectorResize,
   inspectorEntry, inspectorContent, allContent, gitHistory,
@@ -430,4 +438,4 @@ export function Editor({
       </div>
     </div>
   )
-}
+})
