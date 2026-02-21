@@ -58,6 +58,11 @@ async fn ai_chat(request: AiChatRequest) -> Result<AiChatResponse, String> {
     ai_chat::send_chat(request).await
 }
 
+#[tauri::command]
+fn save_image(vault_path: String, filename: String, data: String) -> Result<String, String> {
+    vault::save_image(&vault_path, &filename, &data)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -81,7 +86,8 @@ pub fn run() {
             get_file_diff,
             git_commit,
             git_push,
-            ai_chat
+            ai_chat,
+            save_image
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

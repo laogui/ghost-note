@@ -182,6 +182,7 @@ function App() {
             onAddProperty={notes.handleAddProperty}
             showAIChat={showAIChat}
             onToggleAIChat={() => setShowAIChat(c => !c)}
+            vaultPath={vaultPath}
           />
         </div>
       </div>

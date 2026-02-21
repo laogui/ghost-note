@@ -4,6 +4,8 @@ import { filterSuggestionItems } from '@blocknote/core/extensions'
 import { createReactInlineContentSpec, useCreateBlockNote, SuggestionMenuController } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import '@blocknote/mantine/style.css'
+import { invoke, convertFileSrc } from '@tauri-apps/api/core'
+import { isTauri } from '../mock-tauri'
 import type { VaultEntry, GitCommit } from '../types'
 import { Inspector, type FrontmatterValue } from './Inspector'
 import { AIChatPanel } from './AIChatPanel'
@@ -45,6 +47,7 @@ interface EditorProps {
   onAddProperty?: (path: string, key: string, value: FrontmatterValue) => Promise<void>
   showAIChat?: boolean
   onToggleAIChat?: () => void
+  vaultPath?: string
 }
 
 // --- Custom Inline Content: WikiLink ---
@@ -147,13 +150,43 @@ export const Editor = memo(function Editor({
   inspectorEntry, inspectorContent, allContent, gitHistory,
   onUpdateFrontmatter, onDeleteProperty, onAddProperty,
   showAIChat, onToggleAIChat,
+  vaultPath,
 }: EditorProps) {
   const [diffMode, setDiffMode] = useState(false)
   const [diffContent, setDiffContent] = useState<string | null>(null)
   const [diffLoading, setDiffLoading] = useState(false)
 
+  // Ref for vaultPath so the uploadFile closure always sees the latest value
+  const vaultPathRef = useRef(vaultPath)
+  vaultPathRef.current = vaultPath
+
   // Single editor instance — reused across all tabs
-  const editor = useCreateBlockNote({ schema })
+  const editor = useCreateBlockNote({
+    schema,
+    uploadFile: async (file: File) => {
+      if (isTauri() && vaultPathRef.current) {
+        // Tauri mode: save to vault/attachments and return a stable asset URL
+        const buf = await file.arrayBuffer()
+        const bytes = new Uint8Array(buf)
+        let binary = ''
+        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
+        const base64 = btoa(binary)
+        const savedPath = await invoke<string>('save_image', {
+          vaultPath: vaultPathRef.current,
+          filename: file.name,
+          data: base64,
+        })
+        return convertFileSrc(savedPath)
+      }
+      // Browser dev mode: use data URL (survives reload, acceptable for dev)
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result as string)
+        reader.onerror = () => reject(reader.error)
+        reader.readAsDataURL(file)
+      })
+    },
+  })
   // Cache parsed blocks per tab path for instant switching
   const tabCacheRef = useRef<Map<string, any[]>>(new Map())
   const prevActivePathRef = useRef<string | null>(null)

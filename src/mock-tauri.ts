@@ -1259,6 +1259,12 @@ const mockHandlers: Record<string, (args: any) => any> = {
       stop_reason: 'end_turn',
     }
   },
+  save_image: (args: { vault_path?: string; filename: string; data: string }) => {
+    // Return a plausible file path matching the real Rust backend behavior
+    const vault = args.vault_path ?? '/Users/luca/Laputa'
+    const timestamp = Date.now()
+    return `${vault}/attachments/${timestamp}-${args.filename}`
+  },
 }
 
 export function isTauri(): boolean {
