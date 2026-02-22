@@ -9104,6 +9104,504 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "ghCL1",
+      "x": 0,
+      "y": 7320,
+      "name": "Git History — Commit List",
+      "width": 300,
+      "height": "fit_content(600)",
+      "fill": "$--background",
+      "cornerRadius": "$--radius-lg",
+      "stroke": {
+        "fill": "$--border",
+        "thickness": 1
+      },
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 12,
+      "children": [
+        {
+          "type": "text",
+          "id": "ghCL1h",
+          "content": "HISTORY",
+          "fill": "$--muted-foreground",
+          "fontSize": 10,
+          "fontWeight": "600",
+          "letterSpacing": 1.2
+        },
+        {
+          "type": "frame",
+          "id": "ghC1",
+          "layout": "vertical",
+          "width": "fill_container",
+          "gap": 2,
+          "padding": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "stroke": {
+            "fill": "$--border",
+            "thickness": {
+              "left": 2
+            }
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "ghC1r",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghC1h",
+                  "content": "a1b2c3d",
+                  "fill": "$--primary",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "underline": true
+                },
+                {
+                  "type": "text",
+                  "id": "ghC1d",
+                  "content": "2d ago",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 10
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ghC1m",
+              "content": "Update grow-newsletter with latest changes",
+              "fill": "$--secondary-foreground",
+              "fontSize": 12,
+              "textGrowth": "fixed-width",
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "ghC1a",
+              "content": "Luca Rossi",
+              "fill": "$--muted-foreground",
+              "fontSize": 10
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ghC2",
+          "layout": "vertical",
+          "width": "fill_container",
+          "gap": 2,
+          "padding": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "stroke": {
+            "fill": "$--border",
+            "thickness": {
+              "left": 2
+            }
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "ghC2r",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghC2h",
+                  "content": "e4f5g6h",
+                  "fill": "$--primary",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "underline": true
+                },
+                {
+                  "type": "text",
+                  "id": "ghC2d",
+                  "content": "5d ago",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 10
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ghC2m",
+              "content": "Add new section to grow-newsletter",
+              "fill": "$--secondary-foreground",
+              "fontSize": 12,
+              "textGrowth": "fixed-width",
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "ghC2a",
+              "content": "Luca Rossi",
+              "fill": "$--muted-foreground",
+              "fontSize": 10
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ghC3",
+          "layout": "vertical",
+          "width": "fill_container",
+          "gap": 2,
+          "padding": [
+            0,
+            0,
+            0,
+            10
+          ],
+          "stroke": {
+            "fill": "$--border",
+            "thickness": {
+              "left": 2
+            }
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "ghC3r",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghC3h",
+                  "content": "i7j8k9l",
+                  "fill": "$--primary",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "underline": true
+                },
+                {
+                  "type": "text",
+                  "id": "ghC3d",
+                  "content": "12d ago",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 10
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ghC3m",
+              "content": "Create grow-newsletter",
+              "fill": "$--secondary-foreground",
+              "fontSize": 12,
+              "textGrowth": "fixed-width",
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "ghC3a",
+              "content": "Luca Rossi",
+              "fill": "$--muted-foreground",
+              "fontSize": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ghDO1",
+      "x": 380,
+      "y": 7320,
+      "name": "Git History — Diff Open",
+      "width": 600,
+      "height": "fit_content(500)",
+      "fill": "$--background",
+      "cornerRadius": "$--radius-lg",
+      "stroke": {
+        "fill": "$--border",
+        "thickness": 1
+      },
+      "layout": "vertical",
+      "gap": 0,
+      "padding": 0,
+      "children": [
+        {
+          "type": "frame",
+          "id": "ghDObc",
+          "layout": "horizontal",
+          "width": "fill_container",
+          "height": 36,
+          "padding": [
+            0,
+            12
+          ],
+          "gap": 8,
+          "alignItems": "center",
+          "fill": "$--muted",
+          "stroke": {
+            "fill": "$--border",
+            "thickness": {
+              "bottom": 1
+            }
+          },
+          "children": [
+            {
+              "type": "text",
+              "id": "ghDObcP",
+              "content": "responsibility / grow-newsletter.md",
+              "fill": "$--muted-foreground",
+              "fontSize": 12
+            },
+            {
+              "type": "frame",
+              "id": "ghDObcS",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "ghDObcB",
+              "layout": "horizontal",
+              "padding": [
+                2,
+                8
+              ],
+              "cornerRadius": "$--radius-sm",
+              "fill": "$--primary",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDObcBt",
+                  "content": "Diff: a1b2c3d",
+                  "fill": "$--primary-foreground",
+                  "fontSize": 10,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ghDOb",
+          "layout": "vertical",
+          "width": "fill_container",
+          "padding": 0,
+          "gap": 0,
+          "children": [
+            {
+              "type": "frame",
+              "id": "ghDOl1",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "fill": "$--muted",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl1n",
+                  "content": "1",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl1t",
+                  "content": "diff --git a/grow-newsletter.md b/grow-newsletter.md",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ghDOl2",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "fill": "#2196F30D",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl2n",
+                  "content": "2",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl2t",
+                  "content": "@@ -5,3 +5,5 @@",
+                  "fill": "$--primary",
+                  "fontSize": 11,
+                  "fontStyle": "italic"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ghDOl3",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl3n",
+                  "content": "3",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl3t",
+                  "content": " # Grow Newsletter",
+                  "fill": "$--secondary-foreground",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ghDOl4",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "fill": "#f4433614",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl4n",
+                  "content": "4",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl4t",
+                  "content": "-Old paragraph from before a1b2c3d.",
+                  "fill": "#f44336",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ghDOl5",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "fill": "#4caf5014",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl5n",
+                  "content": "5",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl5t",
+                  "content": "+Updated paragraph at commit a1b2c3d.",
+                  "fill": "#4caf50",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ghDOl6",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "height": 22,
+              "padding": [
+                0,
+                8
+              ],
+              "alignItems": "center",
+              "fill": "#4caf5014",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ghDOl6n",
+                  "content": "6",
+                  "fill": "$--muted-foreground",
+                  "fontSize": 11,
+                  "textGrowth": "fixed-width",
+                  "width": 30,
+                  "textAlign": "right"
+                },
+                {
+                  "type": "text",
+                  "id": "ghDOl6t",
+                  "content": "+New content added in this commit.",
+                  "fill": "#4caf50",
+                  "fontSize": 11
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
