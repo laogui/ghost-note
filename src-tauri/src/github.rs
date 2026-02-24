@@ -5,7 +5,7 @@ use std::process::Command;
 /// GitHub App client ID for OAuth device flow.
 /// To set up: GitHub Settings → Developer settings → GitHub Apps → New GitHub App.
 /// Enable "Device authorization flow" under Optional features. Webhook can be disabled.
-const GITHUB_CLIENT_ID: &str = "Ov23liCuBz7Z5hKk6T8c";
+const GITHUB_CLIENT_ID: &str = "Ov23liwee215tDMs9u4L";
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct GithubRepo {
