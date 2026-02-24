@@ -175,14 +175,22 @@ async fn github_device_flow_start_with_base(base_url: &str) -> Result<DeviceFlow
     let response = client
         .post(format!("{}/login/device/code", base_url))
         .header("Accept", "application/json")
+        .header("User-Agent", "Laputa-App")
         .form(&[("client_id", GITHUB_CLIENT_ID), ("scope", "repo")])
         .send()
         .await
         .map_err(|e| format!("Device flow request failed: {}", e))?;
 
     if !response.status().is_success() {
+        let status = response.status();
         let body = response.text().await.unwrap_or_default();
-        return Err(format!("Device flow start failed: {}", body));
+        if status.as_u16() == 404 {
+            return Err(
+                "GitHub device flow not available. The OAuth App may not have device flow enabled."
+                    .to_string(),
+            );
+        }
+        return Err(format!("Device flow start failed ({}): {}", status, body));
     }
 
     response
@@ -204,6 +212,7 @@ async fn github_device_flow_poll_with_base(
     let response = client
         .post(format!("{}/login/oauth/access_token", base_url))
         .header("Accept", "application/json")
+        .header("User-Agent", "Laputa-App")
         .form(&[
             ("client_id", GITHUB_CLIENT_ID),
             ("device_code", device_code),
@@ -792,6 +801,23 @@ mod tests {
         mock.assert_async().await;
         assert!(result.is_err());
         assert!(result.unwrap_err().contains("Device flow start failed"));
+    }
+
+    #[tokio::test]
+    async fn test_github_device_flow_start_404_gives_clear_message() {
+        let mut server = mockito::Server::new_async().await;
+        let mock = server
+            .mock("POST", "/login/device/code")
+            .with_status(404)
+            .with_body(r#"{"error":"Not Found"}"#)
+            .create_async()
+            .await;
+
+        let result = github_device_flow_start_with_base(&server.url()).await;
+        mock.assert_async().await;
+        assert!(result.is_err());
+        let err = result.unwrap_err();
+        assert!(err.contains("device flow not available"));
     }
 
     #[tokio::test]
