@@ -14,6 +14,7 @@ function handleSuggestionKeys({
   onSelectSuggestion,
 }: HandleSuggestionKeysArgs): boolean {
   if (!suggestionsOpen) return false
+  if (event.nativeEvent.isComposing) return false
 
   if (event.key === 'ArrowDown') {
     event.preventDefault()
@@ -45,6 +46,8 @@ function handleDeleteKeys({
   event,
   onDeleteContent,
 }: HandleDeleteKeysArgs): boolean {
+  if (event.nativeEvent.isComposing) return false
+
   if (event.key === 'Backspace') {
     event.preventDefault()
     onDeleteContent('backward')
@@ -91,6 +94,7 @@ function handleSubmitKey({
 }: HandleSubmitKeyArgs): boolean {
   if (!canSubmit) return false
   if (event.key !== 'Enter' || event.shiftKey) return false
+  if (event.nativeEvent.isComposing) return false
 
   event.preventDefault()
   onSubmit()

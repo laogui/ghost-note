@@ -181,4 +181,59 @@ describe('WikilinkChatInput', () => {
     expect(editor).toHaveAttribute('contenteditable', 'false')
     expect(editor).toHaveAttribute('aria-disabled', 'true')
   })
+
+  describe('IME composition (Chinese input method)', () => {
+    it('does not submit on Enter during composition', () => {
+      const onSend = vi.fn()
+      render(<Controlled onSend={onSend} />)
+      updateEditorText('hello')
+
+      fireEvent.keyDown(screen.getByTestId('agent-input'), {
+        key: 'Enter',
+        isComposing: true,
+      })
+
+      expect(onSend).not.toHaveBeenCalled()
+    })
+
+    it('does not delete content on Backspace during composition', () => {
+      render(<Controlled />)
+      updateEditorText('edit my [[alp')
+      clickFirstSuggestion()
+
+      const editor = screen.getByTestId('agent-input')
+      fireEvent.keyDown(editor, { key: 'Backspace', isComposing: true })
+
+      expect(screen.getByTestId('inline-wikilink-chip')).toBeInTheDocument()
+    })
+
+    it('does not select suggestion on Enter during composition', () => {
+      const onSend = vi.fn()
+      render(<Controlled onSend={onSend} />)
+      updateEditorText('edit my [[alp')
+
+      fireEvent.keyDown(screen.getByTestId('agent-input'), {
+        key: 'Enter',
+        isComposing: true,
+      })
+
+      expect(screen.queryByTestId('inline-wikilink-chip')).toBeNull()
+      expect(onSend).not.toHaveBeenCalled()
+    })
+
+    it('does not cycle suggestions on ArrowDown during composition', () => {
+      render(<Controlled />)
+      updateEditorText('[[alp')
+
+      const menu = screen.getByTestId('wikilink-menu')
+      const initialSelected = menu.querySelector('[aria-selected="true"]')
+
+      fireEvent.keyDown(screen.getByTestId('agent-input'), {
+        key: 'ArrowDown',
+        isComposing: true,
+      })
+
+      expect(menu.querySelector('[aria-selected="true"]')).toBe(initialSelected)
+    })
+  })
 })
